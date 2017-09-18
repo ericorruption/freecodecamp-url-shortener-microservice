@@ -21,5 +21,14 @@
     <li>If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</li>
     <li>When I visit that shortened URL, it will redirect me to my original link.</li>
   </ol>
+
+  <p>You can POST to <code>'/new'</code> and receive a response with a shortUrl. e.g: <code>https://pond-cross.glitch.me/new/http://www.example.com</code></p>
+  <p>The response looks like this</p>
+  <code>
+  {
+    url: 'http://www.example.com',
+    shortUrl: 'https://pond-cross.glitch.me/XXXX'
+  }
+  </code>
 </body>
 </html>

@@ -11,6 +11,8 @@ const app = express()
 app.use(express.static('public'))
 
 app.post('/new/*', (req, res) => {
+  const { protocol, hostname } = req
+  const baseUrl = `${protocol}://${hostname}/`
   const url = req.params[0]
 
   if (!isWebUri(url)) {
@@ -25,13 +27,19 @@ app.post('/new/*', (req, res) => {
       .toArray()
       .then(results => {
         if (results.length > 0) {
-          return res.send(results[0])
+          return res.send({
+            url: results[0].url,
+            shortUrl: `${baseUrl}${results[0].id}`
+          })
         }
 
         collection.insert({
           id: generate(),
           url
-        }).then(result => res.send(result.ops[0]))
+        }).then(result => res.send({
+          url: result.ops[0].url,
+          shortUrl: `${baseUrl}${result.ops[0].id}`
+        }))
       })
       .catch(console.error)
   })
