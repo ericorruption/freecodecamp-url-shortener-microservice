@@ -19,8 +19,8 @@ app.post('/new/*', (req, res) => {
     return res.send('Your link is invalid.')
   }
 
-  connect.then(db => {
-    const collection = db.collection('links')
+  connect.then(client => {
+    const collection = client.db().collection('links')
 
     collection
       .find({ url })
@@ -33,21 +33,27 @@ app.post('/new/*', (req, res) => {
           })
         }
 
-        collection.insert({
-          id: generate(),
-          url
-        }).then(result => res.send({
-          url: result.ops[0].url,
-          shortUrl: `${baseUrl}${result.ops[0].id}`
-        }))
+        collection
+          .insert({
+            id: generate(),
+            url
+          })
+          .then(result =>
+            res.send({
+              url: result.ops[0].url,
+              shortUrl: `${baseUrl}${result.ops[0].id}`
+            })
+          )
       })
       .catch(console.error)
   })
 })
 
 app.get('/:id', (req, res) => {
-  connect.then(db => {
-    db.collection('links')
+  connect.then(client => {
+    client
+      .db()
+      .collection('links')
       .find({ id: req.params.id })
       .toArray()
       .then(results => {

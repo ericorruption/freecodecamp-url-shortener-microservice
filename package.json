@@ -15,12 +15,18 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "express": "^4.15.4",
-    "mongodb": "^2.2.31",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.9",
     "shortid": "^2.2.8",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^2.0.4"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "arrowParens": "avoid"
   }
 }
